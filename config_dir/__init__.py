@@ -26,12 +26,13 @@ def config_dir(name=None, sub_dir=None):
     return sub_dir
 
 
-def load_config(name=None, default={}, sub_dir=None, sub_name="config.yaml"):
+def load_config(name=None, default={}, sub_dir=None, sub_name="config.yaml", create=True):
     conf = config_dir(name=name, sub_dir=sub_dir) / sub_name
     if not conf.exists():
         config = dict(default)
-        with os.fdopen(os.open(conf, os.O_CREAT | os.O_WRONLY, 0o600), "w") as f:
-            yaml.safe_dump(config, f)
+        if create:
+            with os.fdopen(os.open(conf, os.O_CREAT | os.O_WRONLY, 0o600), "w") as f:
+                yaml.safe_dump(config, f)
     else:
         with conf.open() as f:
             config = yaml.safe_load(f)
