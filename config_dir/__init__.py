@@ -9,7 +9,6 @@ import yaml
 def config_dir(name=None, sub_dir=None):
     home = pathlib.Path.home() / name
     if not home.exists():
-        print("Making config dir")
         home.mkdir(0o700)
     if not home.is_dir():
         raise FileExistsError("Expected a directory:", home)
@@ -19,7 +18,6 @@ def config_dir(name=None, sub_dir=None):
 
     sub_dir = home / sub_dir
     if not sub_dir.exists():
-        print("Making config dir")
         sub_dir.mkdir(0o700)
     if not sub_dir.is_dir():
         raise FileExistsError("Expected a directory:", sub_dir)
